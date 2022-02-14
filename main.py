@@ -1,22 +1,39 @@
-# import flask. If you don't have flask installed,
-# hover your mouse over the yellow line in import statement
 from flask import Flask
 
-# Flask uses this argument to determine the root path of
-# the application so that it later can find resource files
-# relative to the location of the application.
 app = Flask(__name__)
 
 
-# Defining routes. We are telling Flask what to do when
-# a request is made at '/' route. In this case, it is
-# localhost:5000/
-@app.route('/')  # Decorator
+@app.route('/')
 def index():
-    return '<h1>Hello World!!</h1>'  # Return either HTML or simple text
+    return '<h1>Hello World!!</h1>'
 
 
-if __name__ == '__main__':  # When this file is run...
-    # ... start the app in debug mode. In debug mode,
-    # server is automatically restarted when you make changes to the code
+# adding more routes
+@app.route('/hello')
+def hello():  # defining index() again would have given an error
+    return 'Hey there!'
+
+
+# variable input in route
+# try localhost:5000/john, or localhost:5000/mary
+@app.route('/hello/<name>')  # name is the input var
+def greet(name):  # name is passed down as parameter
+    return 'Hey there, ' + name + '!'
+
+
+# specifying data type
+@app.route('/hello_str/<string:name>')  # don't put any spaces in url
+def greet_string(name):
+    return 'Hey there!' + name
+
+
+# int data type. Try -
+# localhost:5000/hello_num/1
+# localhost:5000/hello_num/one
+@app.route('/hello_num/<int:num>')
+def next_number(num):
+    return 'Next number is ' + str(num + 1)
+
+
+if __name__ == '__main__':
     app.run(debug=True)
