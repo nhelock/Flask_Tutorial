@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/header.css') }}">
+    <title>My site</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="topBar">
+        <div class="">
+          <img src="{{url_for('static',filename = 'images/logo.jpg')}}" alt="Logo" class="logo">
+          <ul class="barItem">
+
+            <li><a href="index.php">HOME</a></li>
+            <li>SERVICES</li>
+            <li>ABOUT</li>
+            <li>CONTACT</li>
+          </ul>
+        </div>
+
+        <div class="formSection barItem">
+          <form class="barItem" action="include/loginHandler.php" method="post">
+            <input type="text" name="uid" value="" placeholder="E-mail" required>
+            <input type="password" name="pass" value="" placeholder="Password" required>
+            <input type="submit" name="loginButton" value="LOGIN">
+          </form>
+
+          <button class="barItem input" style="margin-left:10px;">
+            <a href="signup.php">SIGNUP</a>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    {% block body %}
+    {% endblock %}
+
+    <h1> This is where the Footer will go</h1>
+
+  </body>
+</html>
