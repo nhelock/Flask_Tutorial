@@ -1,19 +1,17 @@
 from flask import Flask, render_template
-from sqlalchemy.orm import declarative_base, sessionmaker
-from sqlalchemy import Column, Integer, String, Numeric, create_engine
+from sqlalchemy import Column, Integer, String, Numeric, create_engine, text
 
 app = Flask(__name__)
 
 # initialize database
-# URI is in the format mysql://user:password@server/database
-conn = "mysql://root:iit123@localhost/boatdb"
-Base = declarative_base()
-engine = create_engine(conn, echo=True)
-Session = sessionmaker()
+# connection string is in the format mysql://user:password@server/database
+conn_str = "mysql://root:iit123@localhost/boatdb"
+engine = create_engine(conn_str, echo=True)
+conn = engine.connect()
 
 
 # create model
-class BoatsModel(Base):
+class BoatsModel:
     __tablename__ = 'boats'
 
     id = Column('id', Integer, primary_key=True)
@@ -38,8 +36,9 @@ def user(name):
 # get all boats
 @app.route('/boats')
 def get_boats():
-    local_session = Session(bind=engine)
-    boats = local_session.query(BoatsModel).all()  # returns all boats
+    # local_session = Session(bind=engine)
+    # boats = local_session.query(BoatsModel).all()  # returns all boats
+    boats = conn.execute(text("select * from boats")).all()
     print(boats)
     return render_template('boats.html', boats=boats[:10])
 
