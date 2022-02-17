@@ -1,0 +1,38 @@
+<style>
+    .flex-box {
+        display: flex;
+        font-size: 16px;
+        justify-content: center;
+        align-self: center;
+        flex-wrap: wrap;
+    }
+
+    .boat {
+        min-width: 200px;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block body %}
+    <div class="flex-box">
+        {% for boat in boats %}     <!-- for loops in jinja is just like python's. You can also try array slicing here: boats[:15]-->
+            <div class="boat">
+                <ul>
+                    <li>Boat id: {{ boat['id'] }}</li>
+                    <ul>
+                        <li>Name: {{ boat['name'] }}</li>
+                        <li>Type: {{ boat['type'] }}</li>
+                        <li>Owner ID: {{ boat['owner_id'] }}</li>
+                        <li>Price: {{ boat['rental_price'] }}</li>
+                    </ul>
+                </ul>
+            </div>
+        {% endfor %}
+
+        {% if boats | length < 1 %}     <!--- jinja filters --->
+            <h1>No data available</h1>
+        {% endif %}
+    </div>
+
+
+{% endblock %}
