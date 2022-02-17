@@ -42,10 +42,12 @@
 
 {% extends "base.html" %}
 {% block body %}
-
+    {% set prev_page = page - 1 %}  <!-- variables in jinja --->
     <div class="column">
+        <h3>Page {{ page }}</h3>
+
         <div class="flex-box">
-            {% for boat in boats.items %}     <!-- boats.items to access paginated data --->
+            {% for boat in boats %}
                 <div class="boat">
                     <ul>
                         <li>Boat id: {{ boat['id'] }}</li>
@@ -59,17 +61,17 @@
                 </div>
             {% endfor %}
 
-            {% if boats.items | length < 1 %}     <!--- boats.items again here --->
+            {% if boats | length < 1 %}
                 <h1>No data available</h1>
             {% endif %}
         </div>
 
         <div class="pagination_bar">
-            <a href="{{ url_for('get_boats', page=boats.prev_num) }}" class="pagination_button"> < </a>
-            <a class="pagination_button" style="background-color: black"> {{boats.page}} </a>
-            <a href="{{ url_for('get_boats', page=boats.next_num) }}" class="pagination_button" > {{boats.next_num}} </a>
-            <a href="{{ url_for('get_boats', page=boats.next_num + 1) }}" class="pagination_button"> {{boats.next_num + 1}} </a>
-            <a href="{{ url_for('get_boats', page=boats.next_num) }}" class="pagination_button"> > </a>
+            <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a>
+            <a class="pagination_button" style="background-color: black"> {{page}} </a>
+            <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a>
+            <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a>
+            <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button"> > </a>
 
         </div>
     </div>
