@@ -7,17 +7,6 @@ engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
 
 
-# create model
-class BoatsModel:
-    __tablename__ = 'boats'
-
-    id = Column('id', Integer, primary_key=True)
-    name = Column('name', String(32))
-    type = Column('type', String(32))
-    owner_id = Column('owner_id', Integer)
-    rental_price = Column('rental_price', Numeric)
-
-
 # render a file
 @app.route('/')
 def index():
@@ -62,7 +51,6 @@ def create_boat():
         error = e.orig.args[1]
         print(error)
         return render_template('boats_create.html', error=error, success=None)
-
 
 
 if __name__ == '__main__':
