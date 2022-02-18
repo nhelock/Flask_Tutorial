@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template
 from sqlalchemy import Column, Integer, String, Numeric, create_engine, text
 
@@ -6,16 +5,6 @@ app = Flask(__name__)
 conn_str = "mysql://root:iit123@localhost/boatdb"
 engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
-
-# create model
-class BoatsModel:
-    __tablename__ = 'boats'
-
-    id = Column('id', Integer, primary_key=True)
-    name = Column('name', String(32))
-    type = Column('type', String(32))
-    owner_id = Column('owner_id', Integer)
-    rental_price = Column('rental_price', Numeric)
 
 
 # render a file
@@ -37,13 +26,9 @@ def get_boats(page=1):
     # boats = BoatsModel.query.paginate(page=int(page), per_page=10)  # returns all boats
     page = int(page)
     per_page = 10
-    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page-1)*per_page}")).all()
+    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all()
     print(boats)
     return render_template('boats.html', boats=boats, page=page, per_page=per_page)
-
-
-
-
 
 
 if __name__ == '__main__':
