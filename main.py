@@ -7,6 +7,7 @@ engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
 
 
+# render a file
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -50,7 +51,6 @@ def create_boat():
         error = e.orig.args[1]
         print(error)
         return render_template('boats_create.html', error=error, success=None)
-
 
 
 if __name__ == '__main__':
