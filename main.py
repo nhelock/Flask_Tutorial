@@ -15,7 +15,7 @@ def hello():  # defining index() again would have given an error
 
 
 # variable input in route
-# try localhost:5000/john, or localhost:5000/mary
+# try localhost:5000/hello/john, or localhost:5000/hello/mary
 @app.route('/hello/<name>')  # name is the input var
 def greet(name):  # name is passed down as parameter
     return 'Hey there, ' + name + '!'
