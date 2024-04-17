@@ -11,10 +11,11 @@ header li {
   display: block;
   padding-left: 8px;
   padding-right: 8px;
+  color:rgb(217, 216, 216);
 }
 
 .topBar{
-  background-color: #faf9f7;
+  background-color: #332d28;
   display:flex;
   justify-content: space-between;
   align-items:center;
@@ -45,7 +46,7 @@ h1{
 
 header a{
   text-decoration:none;
-  color:black;
+  color:rgb(217, 216, 216);
 }
 
 /* FOOTER */
@@ -64,7 +65,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   font-size: 14px;
-  background-color: #f4f4f4;
+  background-color: #cc641b;
   align-items: start;
   min-height: 100vh;
 }
@@ -74,8 +75,8 @@ body {
   flex-flow: row wrap;
   padding: 30px 30px 20px 30px;
   color: #2f2f2f;
-  background-color: #fff;
-  border-top: 1px solid #e5e5e5;
+  background-color: #332d28;
+  border-top: 1px solid #60574f;
 }
 
 .footer > * {
