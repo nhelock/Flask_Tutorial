@@ -7,6 +7,20 @@ engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
 
 
+def get_int(value, min, default):
+	try:
+		value = int(value)
+		assert(value >= min)
+	except:
+		value = default
+
+	return value
+
+
+def run_query(query, parameters = None):
+	return conn.execute(text(query), parameters)
+
+
 # render a file
 @app.route('/')
 def index():
@@ -21,7 +35,7 @@ def user(name):
 
 # get all boats
 # this is done to handle requests for two routes -
-@app.route('/boats/')
+@app.route('/boats/', methods=['GET', 'POST'])
 @app.route('/boats/<page>')
 def get_boats(page=1):
     page = int(page)  # request params always come as strings. So type conversion is necessary.
@@ -29,6 +43,15 @@ def get_boats(page=1):
     boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all()
     print(boats)
     return render_template('boats.html', boats=boats, page=page, per_page=per_page)
+
+
+@app.route("/boats/results/<boat_id>", methods=['GET', 'POST'])
+def results_boat(boat_id = 1):
+	boat_id = get_int(boat_id, 1, 1)
+
+	boat = run_query(f"select * from `boats` where `id` = {boat_id}").first()
+
+	return render_template("results.html", boat = boat)
 
 
 @app.route('/create', methods=['GET'])

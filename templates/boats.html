@@ -1,4 +1,7 @@
 <style>
+    *{
+        text-decoration:none;
+    }
     .flex-box {
         display: flex;
         font-size: 16px;
@@ -15,6 +18,8 @@
         
         margin: 5px;
         border-radius: 15px;
+        color:black;
+        text-decoration:none;
     }
 
     .pagination_bar {
@@ -43,6 +48,10 @@
         padding-top: 20px;
         align-items: center;
     }
+    ul {
+        color:black;
+        text-decoration: none;
+    }
 </style>
 
 {% extends "base.html" %}
@@ -53,6 +62,7 @@
 
         <div class="flex-box">
             {% for boat in boats %}
+            <a href="{{ "/boats/results/" + boat["id"] | string }}">
                 <div class="boat">
                     <ul>
                         <li>Boat id: {{ boat['id'] }}</li>
@@ -64,6 +74,7 @@
                         </ul>
                     </ul>
                 </div>
+            </a>
             {% endfor %}
 
             {% if boats | length < 1 %}

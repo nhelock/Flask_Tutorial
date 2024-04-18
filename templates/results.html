@@ -1,0 +1,36 @@
+<style>
+    .flex-box {
+        display: flex;
+        font-size: 16px;
+        flex-wrap: wrap;
+        width: 1140px;
+        margin: auto;
+    }
+
+    .boat {
+        min-width: 400px;
+        max-width: 400px;
+        padding: 10px;
+        background-color: rgb(224, 217, 204, .5);
+        
+        margin: auto;
+        border-radius: 15px;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block body %}
+
+
+<div class="boat">
+    <ul>
+        <li>Boat id: {{ boat['id'] }}</li>
+        <ul>
+            <li>Name: {{ boat['name'] }}</li>
+            <li>Type: {{ boat['type'] }}</li>
+            <li>Owner ID: {{ boat['owner_id'] }}</li>
+            <li>Price: {{ boat['rental_price'] }}</li>
+        </ul>
+    </ul>
+</div>
+{% endblock %}

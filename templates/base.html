@@ -21,15 +21,24 @@
         </div>
 
         <div class="formSection barItem">
-          <form class="barItem" action="" method="post">
-            <input type="text" name="uid" value="" placeholder="E-mail" required>
-            <input type="password" name="pass" value="" placeholder="Password" required>
-            <input type="submit" name="loginButton" value="LOGIN">
-          </form>
+          <form class="barItem" id="boatForm" method="post">
+            <input type="text" id="boatId" name="uid" value="" placeholder="Boat ID" required>
+            <input type="submit" name="BoatSearch" value="Search">
+        </form>
+        
+        <script>
+            document.getElementById("boatForm").addEventListener("submit", function(event) {
+                var boatId = document.getElementById("boatId").value;
+                if (boatId.trim() !== "") {
+                    var actionUrl = "/boats/results/" + boatId;
+                    this.action = actionUrl;
+                    this.submit();
+                } else {
+                    alert("Error")
+                }
+            });
+        </script>
 
-          <button class="barItem input" style="margin-left:10px;">
-            <a href="#">SIGNUP</a>
-          </button>
         </div>
 
       </div>
