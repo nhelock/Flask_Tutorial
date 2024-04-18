@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from sqlalchemy import Column, Integer, String, Numeric, create_engine, text
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ def user(name):
 
 # get all boats
 # this is done to handle requests for two routes -
-@app.route('/boats/', methods=['GET', 'POST'])
+@app.route('/boats/')
 @app.route('/boats/<page>')
 def get_boats(page=1):
     page = int(page)  # request params always come as strings. So type conversion is necessary.
@@ -52,6 +52,38 @@ def results_boat(boat_id = 1):
 	boat = run_query(f"select * from `boats` where `id` = {boat_id}").first()
 
 	return render_template("results.html", boat = boat)
+
+
+@app.route("/boats/alter/<boat_id>", methods=['GET'])
+def alter_boat(boat_id = 1):
+	boat_id = get_int(boat_id, 1, 1)
+
+	boat = run_query(f"select * from `boats` where `id` = {boat_id}").first()
+
+	return render_template("alter.html", boat = boat)
+
+
+@app.route("/boats/", methods=['POST'])
+def alter_boat_request():
+    boat_id = get_int(request.form.get("id"), 1, 1)
+
+    success = None
+    error = None
+
+    try:
+        conn.execute(
+            text(f"UPDATE boats SET name = :name, type = :type, owner_id = :owner_id, rental_price = :rental_price where id = {boat_id}"),
+            request.form
+        )
+
+        success = "Data changed"
+    except Exception as e:
+        print(e)
+        error = e
+
+    # boat = conn.execute(text(f"select * from boats where id = {boat_id}")).first()
+
+    return redirect('../boats')
 
 
 @app.route('/create', methods=['GET'])
@@ -71,8 +103,7 @@ def create_boat():
         )
         return render_template('boats_create.html', error=None, success="Data inserted successfully!")
     except Exception as e:
-        error = e.orig.args[1]
-        print(error)
+        print(e)
         return render_template('boats_create.html', error=error, success=None)
 
 

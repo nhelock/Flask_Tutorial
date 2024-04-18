@@ -1,0 +1,62 @@
+<style>
+    .flex-box {
+        display: flex;
+        font-size: 16px;
+        flex-wrap: wrap;
+        width: 1140px;
+        margin: auto;
+    }
+
+    .boat {
+        display:inline;
+        min-width: 400px;
+        max-width: 400px;
+        padding: 10px;
+        background-color: rgb(224, 217, 204, .5);
+        
+        margin: auto;
+        border-radius: 15px;
+        justify-content:center;
+        text-align:center;
+    }
+    .input_submit {
+        background-color:gray;
+        border-color:black;
+        border-radius:5px;
+        text-decoration:wavy;
+        margin-top: 5px;
+
+    }
+    .input_field {
+        color:black;
+        background-color:wheat;
+        border-color:gray;
+        border-radius:5px;
+        margin-top:5px;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block body %}
+
+
+<div class="boat">
+
+    <h1>Boat id: {{ boat['id'] }}</h1>
+    <!-- <ul>
+        <li>Name: {{ boat['name'] }}</li>
+        <li>Type: {{ boat['type'] }}</li>
+        <li>Owner ID: {{ boat['owner_id'] }}</li>
+        <li>Price: {{ boat['rental_price'] }}</li>
+    </ul> -->
+
+    <form action="/boats/" method="POST">
+        <input type="hidden" value="{{ boat['id'] }}" name="id">
+        <input type="text" name="name" value={{boat['name']}} class="input_field"> <br>
+        <input type="text" name="type" value={{boat['type']}} class="input_field"> <br>
+        <input type="number" name="owner_id" value={{boat['owner_id']}} class="input_field"> <br>
+        <input type="number" name="rental_price" value={{boat['rental_price']}} class="input_field" step="0.01"> <br>
+        <input type="submit" value="Submit" class="input_submit">
+    </form>
+</div>
+{% endblock %}
